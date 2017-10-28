@@ -1,0 +1,24 @@
+#! /bin/sh
+# /etc/init.d/pyWebCamServe
+WebCamUser='pi'
+
+case "$1" in
+   start)
+      cd /home/pi
+      python3 -m http.server 8000 &
+      fswebcam --loop 1 --background test.jpg
+      echo "starting web server and web cam for $WebCamUser"
+      ;;
+   stop)
+      pkill python3
+      pkill fswebcam
+      echo "web camera and web server stopped"
+      ;;
+   *)
+      echo "Usage: /etc/init.d/pyWebCamServe {start|stop}"
+      exit 1
+      ;;
+
+esac
+exit 0
+
